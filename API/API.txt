@@ -19,6 +19,10 @@ paths:
       responses:
         200:
           description: web page with the menu
+          schema: 
+            type: array
+            items:
+              $ref: "#/definitions/pizza"
           
   /searchPizza:
     post:
@@ -100,6 +104,56 @@ paths:
             type: array
             items:
               $ref: "#/definitions/pizza"
+        406:
+          description: ID of error
+          schema: 
+            properties:
+              error:
+                type: integer
+        400:
+          description: no pizzas      
+              
+  /addPizza:
+    post:
+      summary: add a pizza to menu
+      description: it returns the pizza added
+      parameters:
+        - name: price
+          in: formData
+          description: price of pizza
+          required: true
+          type: integer
+        - name: name
+          in: formData
+          description: name of pizza
+          required: true
+          type: integer
+        - name: ID
+          in: formData
+          description: id of pizza 
+          required: true
+          type: boolean
+        - name: Ingredients  
+          description: ingrediets of pizza
+          in: formData
+          required: true
+          type: array
+          items: 
+            type: string
+       
+      responses:
+        200:
+          description: pizza added
+          schema: 
+              $ref: "#/definitions/pizza"
+        406:
+          description: ID of error
+          schema: 
+            properties:
+              error:
+                type: integer
+        400:
+          description: error    
           
 definitions:
   pizza:
@@ -118,4 +172,3 @@ definitions:
         items: 
           type: string
         description: array.
-        
