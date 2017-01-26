@@ -79,3 +79,48 @@ describe("Test /searchPizza", function() {
 
 });
 
+// Test for /deletePizza
+describe("Test /deletePizza", function() {
+	//set the data
+	var data = {ID: '1'};
+        
+	
+	//legal request
+	it("to returns status code 200", function(done) {
+	  client.post(base_url + "deletePizza/", data, function(err, res, body) {
+		expect(body).toEqual(
+			{
+		      ID: 1,
+		      name: "Margherita", 
+		      price: 9.5,
+		      ingriedentsList: ["pomodoro","mozzarella", "basilico", "olio"]
+			}
+		);
+
+		done();
+	  });
+	});
+	
+
+	//Pizza does not exist
+	data1 = {ID: "10" };
+	it("to returns status code 404", function(done) {
+	  client.post(base_url + "deletePizza/", data1, function(err, res, body) {
+		expect(res.statusCode).toBe(404);
+		done();
+	  });
+	});
+	
+	//wrong parameter
+	data2 = {name: "1" };
+	it("to returns status code 406", function(done) {
+	  client.post(base_url + "deletePizza/", data2, function(err, res, body) {
+		expect(res.statusCode).toBe(406);
+		expect(body).toBe(1);
+		done();
+	  });
+	});
+
+
+});
+
